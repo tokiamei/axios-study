@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axios中的拦截器</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <button id="btn1">点击获取所有人的信息</button>
+  <script>
+    const btn1 = document.getElementById('btn1')
+    // 创建拦截器【需求：时间戳为奇数加上 headers】
+    axios.interceptors.request.use((config) => {
+      console.log('请求拦截器执行了');
+      if (Date.now() % 2 === 0) {
+        config.headers.school = '霍格沃茨' // 修改请求头可能会导致报错
+        console.log("jjjjj");
+      }
+      console.log('$$$$', config);
+      return config
+    })
+
+    // 响应拦截器
+    axios.interceptors.response.use(
+      response => {
+        console.log('响应成功', response);
+        return response
+      },
+      error => {
+        console.log('响应失败', error);
+      }
+    )
+    btn1.addEventListener('click', async () => {
+      try {
+        const result = await axios.get('http://localhost:5000/persons')
+        console.log(result.data);
+      } catch (error) {
+        console.log('🐱资源找不到了🐱', error);
+      }
+    })
+  </script>
+</body>
+</html>

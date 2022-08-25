@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试延迟</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <button id="btn1">点击获取所有人的信息</button>
+  <h1 id="info"></h1>
+  <script>
+    const btn1 = document.getElementById('btn1')
+    const info = document.getElementById('info')
+    btn1.addEventListener('click', async () => {
+      try {
+        const result = await axios({
+          url: 'http://localhost:5000/test1?delay=2000',
+          method: 'get',
+          // 设置超时时间，超过 2 秒，结果就是 error
+          timeout: 1000
+        })
+
+        console.log(result);
+        // info.innerHTML = result
+      } catch (error) {
+        console.log('🐱资源找不到了🐱', error);
+        info.innerHTML = '🐱资源找不到了🐱'
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加或删除一个人信息</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+  <button id="btn1">点击添加一个人的信息</button>
+  <hr>
+  <button id="btn2">点击删除一个人的信息</button>
+  <hr>
+  <button id="btn3">点击更新一个人的信息</button>
+  <hr>
+  名字: <input id="name" type="text">
+  <hr>
+  年龄: <input id="age" type="text">
+  <hr>
+  删除的人的Id: <input id="id1" type="text">
+  <hr>
+  更新的人的Id: <input id="id2" type="text">
+  <hr>
+  修改后的名字: <input id="updateInfo" type="text">
+  <script>
+    const btn1 = document.getElementById('btn1')
+    const btn2 = document.getElementById('btn2')
+    const btn3 = document.getElementById('btn3')
+    const name = document.getElementById('name')
+    const age = document.getElementById('age')
+    const id1 = document.getElementById('id1')
+    const id2 = document.getElementById('id2')
+    const updateInfo = document.getElementById('updateInfo')
+    // 添加一个人信息【携带 json 编码参数或 urlencoded 参数】
+    btn1.addEventListener('click', async () => {
+      try {
+        // 完整版
+        /* const result = await axios({
+          url: 'http://localhost:5000/person',
+          method: 'post',
+          // 默认是 json 编码
+          // data: { name: '秩序圣华', age: 20 },
+          // urlencoded 编码
+          data: `name=${name.value}&age=${age.value}`
+        }) */
+
+        // 精简版
+        const result = await axios.post('http://localhost:5000/person', { name: name.value, age: age.value })
+
+        console.log(result.data);
+        // info.innerHTML = result
+      } catch (error) {
+        console.log('🐱资源找不到了🐱', error);
+      }
+    })
+    
+    // 删除一个人信息
+    btn2.addEventListener('click', async () => {
+      try {
+        const result = await axios({
+          url: `http://localhost:5000/person/${id.value}`,
+          method: 'delete'
+        })
+        console.log(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })
+
+    // 更新一个人信息【携带 json 编码参数或 urlencoded 参数】
+    btn3.onclick = async () => {
+      try {
+        const result = await axios({
+          url: 'http://localhost:5000/person',
+          method: 'put',
+          data: { id: id2.value, name: updateInfo.value }
+        })  
+        console.log(result.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  </script>
+</body>
+</html>

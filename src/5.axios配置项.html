@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>axios配置信息</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <button id="btn">点击获取所有人的信息</button>
+  <script>
+    const btn = document.getElementById('btn')
+
+    // 给 axios 配置默认属性
+    axios.defaults.timeout = 2000
+    axios.defaults.headers = { x: 3 }
+    axios.defaults.baseURL = 'http://localhost:5000'
+
+    btn.addEventListener('click', async () => {
+      try {
+        // 完整版
+        const result = await axios({
+          url: '/persons',
+          method: 'get',
+          // params: { a: 1, b: 2 }, // 携带 query 参数
+          // data: { c: 3, d: 4}, // 配置请求体参数【json 编码】
+          // data: 'e=5&f=6', // 配置请求体参数【urlencoded 编码】,
+          // timeout: 2000, // 配置超时时间
+          // headers: { demo: 123 }, // 配置请求头【请求头描述了客户端向服务器发送请求时使用的http协议类型，所使用的编码，以及发送内容的长度，refer，等等。refer干嘛的，一般用来做简单的防跨站攻击】
+          // responseType: 'json' // 配置相应数据的格式【默认值】
+        })
+
+        console.log(result.data.data);
+      } catch (error) {
+        // console.log('🐱资源找不到了🐱');
+        info.innerHTML = '🐱资源找不到了🐱'
+      }
+    })
+  </script>
+</body>
+</html>

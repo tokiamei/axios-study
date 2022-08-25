@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>点击获取某个人的信息</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <button id="btn1">点击获取所有人的信息</button>
+  <input id="ipt" type="text">
+  <script>
+    const btn1 = document.getElementById('btn1')
+    const ipt = document.getElementById('ipt')
+    btn1.addEventListener('click', async () => {
+      try {
+        // 完整版
+        /* const result = await axios({
+          url: 'http://localhost:5000/person',
+          method: 'get',
+          // 这里写的是 params 但是携带的是 query 参数
+          params: {
+            id: ipt.value
+          }
+        }) */
+
+        // 精简版
+        // const result = await axios.get(`http://localhost:5000/person?id=${ipt.value}`)
+        const result = await axios.get(`http://localhost:5000/person`, {
+          params: {
+            id: ipt.value
+          }
+        })
+
+
+        console.log(result.data);
+        // info.innerHTML = result
+      } catch (error) {
+        console.log('🐱资源找不到了🐱', error);
+        info.innerHTML = '🐱资源找不到了🐱'
+      }
+    })
+  </script>
+</body>
+</html>
